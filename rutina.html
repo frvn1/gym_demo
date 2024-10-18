@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutina del Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const rutinaTable = document.getElementById("rutinaTableBody");
+            const selectEjercicio = document.getElementById("ejercicio");
+
+            // Ejercicios por tipo
+            const ejercicios = {
+                fuerza: ["Press de banca", "Sentadilla", "Peso muerto"],
+                velocidad: ["Sprints", "Carrera de resistencia"],
+                empuje: ["Flexiones", "Press militar"]
+            };
+
+            // Cuando se selecciona un tipo de ejercicio, actualiza las opciones
+            document.getElementById("tipoEjercicio").addEventListener("change", function() {
+                const tipo = this.value;
+                selectEjercicio.innerHTML = ""; // Limpiar las opciones anteriores
+                ejercicios[tipo].forEach(ejercicio => {
+                    const option = document.createElement("option");
+                    option.value = ejercicio;
+                    option.textContent = ejercicio;
+                    selectEjercicio.appendChild(option);
+                });
+            });
+
+            // Añadir rutina
+            document.getElementById("btnAñadirRutina").addEventListener("click", function() {
+                const dia = document.getElementById("diaEntrenamiento").value;
+                const tipo = document.getElementById("tipoEjercicio").value;
+                const ejercicio = document.getElementById("ejercicio").value;
+                const video = document.getElementById("videoLink").value;
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${dia}</td>
+                    <td>${tipo}</td>
+                    <td>${ejercicio}</td>
+                    <td><a href="${video}" target="_blank">Ver video</a></td>
+                `;
+                rutinaTable.appendChild(row);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">FITNESS SALUD</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="usuarios.html">Volver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>Rutina de Usuario</h2>
+
+        <!-- Formulario para añadir rutina -->
+        <div class="mb-4">
+            <label for="diaEntrenamiento" class="form-label">Día de Entrenamiento</label>
+            <input type="date" id="diaEntrenamiento" class="form-control mb-2" required>
+
+            <label for="tipoEjercicio" class="form-label">Tipo de Ejercicio</label>
+            <select id="tipoEjercicio" class="form-select mb-2" required>
+                <option value="">Selecciona el tipo de ejercicio</option>
+                <option value="fuerza">Fuerza</option>
+                <option value="velocidad">Velocidad</option>
+                <option value="empuje">Empuje</option>
+            </select>
+
+            <label for="ejercicio" class="form-label">Ejercicio</label>
+            <select id="ejercicio" class="form-select mb-2" required>
+                <option value="">Selecciona un ejercicio</option>
+            </select>
+
+            <label for="videoLink" class="form-label">Link del Video</label>
+            <input type="url" id="videoLink" class="form-control mb-2" placeholder="https://">
+
+            <button id="btnAñadirRutina" class="btn btn-success">Añadir rutina</button>
+        </div>
+
+        <!-- Tabla de rutinas -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Tipo de Ejercicio</th>
+                    <th>Ejercicio</th>
+                    <th>Video</th>
+                </tr>
+            </thead>
+            <tbody id="rutinaTableBody">
+                <!-- Las filas de la rutina se añadirán aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
